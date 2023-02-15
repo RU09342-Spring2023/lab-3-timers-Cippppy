@@ -15,14 +15,14 @@ char LED_Color = 0x01;                       // Global Variable to determine whi
 char risingEdge = 0x00;                      // Global variable to determine if the interrupt should be looking for rising edge
 char fallingEdge = 0x01;                     // // Global variable to determine if the interrupt should be looking for falling edge
 
-void gpioInit();
+void pinInit();
 
 
 int main(void)
 {
     WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
 
-    gpioInit();
+    pinInit();
 
 
 
@@ -52,7 +52,7 @@ int main(void)
 
 
 /*
- * gpioInit()
+ * pinInit()
  *
  * Configures the following GPIO Pins:
  *  - P1.0: Output
@@ -60,7 +60,7 @@ int main(void)
  *  - P2.3: Input with Pullup Resistor
  */
 
-void gpioInit(){
+void pinInit(){
       // Configure RED LED on P1.0 as Output
       P1OUT &= ~BIT0;                         // Clear P1.0 output latch for a defined power-on state
       P1DIR |= BIT0;                          // Set P1.0 to output direction
@@ -85,7 +85,7 @@ void gpioInit(){
 #pragma vector=PORT2_VECTOR
 __interrupt void Port_2(void)
 {
-    P2IFG &= ~BIT3;                         // Clear P1.3 IFG
+    P2IFG &= ~BIT3;                         // Clear P2.3 IFG
 
     if (risingEdge)       // @TODO Fill in this argument within the If statement to check if the interrupt was triggered off a rising edge.
     {
